@@ -1,6 +1,7 @@
 # ZSH Secrets
 
-A tiny plugin to store GPG-encrypted environment variables (or just plain shell scripts).
+A tiny plugin to store [GPG][gpg]-encrypted environment variables (or just plain shell 
+scripts).
 
 ## Quickstart
 
@@ -62,7 +63,46 @@ echo "export ANOTHER_SECRET=42" >> supersecret
 $ secrets encrypt supersecret
 ```
 
-# License
+### Other
+
+In case of successful secret sourcing, `SESSION_SECRETS` environment variable 
+get exported with `true` value. You can reflect the fact that you have an
+unencrypted secret in your session via prompt. E.g. with [p10k][p10k] you can 
+add:
+
+```shell
+function prompt_secrets() {
+  if [[ -n "$SESSION_SECRETS" ]]; then
+    p10k segment -f 3 -t "🔒"
+  fi
+}
+```
+
+This will show a lock sign on a right handside whenever you have an access to 
+some secret.
+
+
+## Motivation
+
+It's a really bad idea to store credentials in plain text form, your computer 
+can be stolen, you can accidentally push them to a public git repository,
+you can accidentally show them on a video call etc.
+
+A good solution for this problem is to use password managers and just copy-paste
+passwords and credentials when necessary. However it doesn't solve problem of an
+unexpected witness and also makes the process cumbersome. What is even worse,
+if you paste your password as a plain-text on a shell - it gets stored in your 
+shell history file for long time (a lifehack: add a whitespace before command to
+not add it to the history file).
+
+This plugin allows you to encrypt your shell script with GPG, as a result:
+
+* secrets never stored as plain text
+* no troubles if they got staged to git repository
+* you can always refer to secrets as to environment variables
+* process of sourcing is fast and secure
+
+## License
 
 ZSH Secrets is copyright 2020 Anton Parkhomenko.
 
@@ -75,5 +115,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+[gpg]: https://gnupg.org/
 [oh-my-zsh]: https://github.com/ohmyzsh/ohmyzsh
+[p10k]: https://github.com/romkatv/powerlevel10k
 [license]: https://www.apache.org/licenses/LICENSE-2.0
