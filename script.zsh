@@ -16,16 +16,16 @@ function decrypt_to_out {
     gpg --decrypt $SECRET_FILENAME
 }
 
-function source_secrets {
+function _source_secrets {
     {source $file} 3<> ${file::==(decrypt_to_out)}
     export SESSION_SECRETS=true
 }
 
-function decrypt {
+function _decrypt {
     gpg -q --decrypt $SECRET_FILENAME
 }
 
-function encrypt {
+function _encrypt {
     echo "Encrypting $SECRET_NAME as $SECRET_FILENAME"
     local file=$(realpath $FILE_NAME)
     gpg --batch --yes --output $SECRET_FILENAME --encrypt --recipient $RECEPIENT $file
@@ -33,22 +33,30 @@ function encrypt {
     rm $file
 }
 
+function _rm {
+    rm $SECRET_FILENAME
+}
+
 case $1 in
     source)
-        source_secrets
+        _source_secrets
         ;;
     decrypt)
-        decrypt
+        _decrypt
         ;;
     encrypt)
-        encrypt
+        _encrypt
+        ;;
+    rm)
+        _rm
         ;;
     *)
         echo "Unknown subcommand $1. source, decrypt or encrypt must be used"
         ;;
 esac
 
-unfunction decrypt
-unfunction source_secrets
+unfunction _decrypt
+unfunction _source_secrets
+unfunction _rm
 unfunction decrypt_to_out
 unfunction realpath
