@@ -1,11 +1,16 @@
 _=${1:?Subcommand must be specified}
-SECRET_NAME=${2:?The secret must be specified}
+FILE_NAME=${2:?The secret must be specified}
+SECRET_NAME=$FILE_NAME:t
 RECEPIENT=${RECEPIENT:?GPG recepient must be specified through RECEPIENT env var}
 
 DEFAULT_SECRETS_STORAGE="$HOME/.secrets"
 
 SECRETS_STORAGE=${SECRETS_STORAGE:-$DEFAULT_SECRETS_STORAGE}
 SECRET_FILENAME="$SECRETS_STORAGE/$SECRET_NAME.gpg"
+
+function realpath {
+    echo $(cd $(dirname $1); pwd)/$(basename $1);
+}
 
 function decrypt_to_out {
     gpg --decrypt $SECRET_FILENAME
@@ -22,9 +27,10 @@ function decrypt {
 
 function encrypt {
     echo "Encrypting $SECRET_NAME as $SECRET_FILENAME"
-    gpg --batch --yes --output $SECRET_FILENAME --encrypt --recipient $RECEPIENT $SECRET_NAME
-    echo "Removing $SECRET_NAME"
-    rm $SECRET_NAME
+    local file=$(realpath $FILE_NAME)
+    gpg --batch --yes --output $SECRET_FILENAME --encrypt --recipient $RECEPIENT $file
+    echo "Removing $file"
+    rm $file
 }
 
 case $1 in
@@ -45,3 +51,4 @@ esac
 unfunction decrypt
 unfunction source_secrets
 unfunction decrypt_to_out
+unfunction realpath
