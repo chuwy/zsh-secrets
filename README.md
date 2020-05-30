@@ -1,6 +1,6 @@
 # ZSH Secrets
 
-A tiny plugin to store GPG-encrypted environment variables (or other just shell scripts).
+A tiny plugin to store GPG-encrypted environment variables (or just plain shell scripts).
 
 ## Quickstart
 
