@@ -42,3 +42,6 @@ case $1 in
         ;;
 esac
 
+unfunction decrypt
+unfunction source_secrets
+unfunction decrypt_to_out
