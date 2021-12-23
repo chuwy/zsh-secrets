@@ -33,7 +33,7 @@ function _encrypt {
     rm $file
 }
 
-function _rm {
+function _remove_file {
     rm $SECRET_FILENAME
 }
 
@@ -48,7 +48,7 @@ case $1 in
         _encrypt
         ;;
     rm)
-        _rm
+        _remove_file
         ;;
     *)
         echo "Unknown subcommand $1. source, decrypt or encrypt must be used"
@@ -57,6 +57,6 @@ esac
 
 unfunction _decrypt
 unfunction _source_secrets
-unfunction _rm
+unfunction _remove_file
 unfunction decrypt_to_out
 unfunction realpath
