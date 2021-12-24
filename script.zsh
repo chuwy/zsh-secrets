@@ -28,9 +28,12 @@ function _decrypt {
 function _encrypt {
     echo "Encrypting $SECRET_NAME as $SECRET_FILENAME"
     local file=$(realpath $FILE_NAME)
-    gpg --batch --yes --output $SECRET_FILENAME --encrypt --recipient $RECEPIENT $file
-    echo "Removing $file"
-    rm $file
+    if gpg --batch --yes --output $SECRET_FILENAME --encrypt --recipient $RECEPIENT $file ; then
+      echo "Removing $file"
+      rm $file
+    else
+      echo "Failed to encrypt $file"
+    fi
 }
 
 function _rm {
