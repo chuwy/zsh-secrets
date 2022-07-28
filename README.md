@@ -9,7 +9,7 @@ Given, [Oh My ZSH][oh-my-zsh] is installed,
 `$ZSH_CUSTOM` is set and you know how to use GPG.
 
 ```sh
-$ git clone https://github.com/chuwy/zsh-secrets.git $ZSH_CUSTOM/plugins/zsh-secrets
+git clone https://github.com/chuwy/zsh-secrets.git $ZSH_CUSTOM/plugins/zsh-secrets
 ```
 
 Then add `zsh-secrets` to your `plugins` section:
