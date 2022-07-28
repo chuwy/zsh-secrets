@@ -9,7 +9,7 @@ Given, [Oh My ZSH][oh-my-zsh] is installed,
 `$ZSH_CUSTOM` is set and you know how to use GPG.
 
 ```sh
-$ git clone https://github.com/chuwy/zsh-secrets.git $ZSH_CUSTOM/plugins/zsh-secrets
+git clone https://github.com/chuwy/zsh-secrets.git $ZSH_CUSTOM/plugins/zsh-secrets
 ```
 
 Then add `zsh-secrets` to your `plugins` section:
@@ -33,8 +33,8 @@ ZSH Secrets provides two configuration options:
 ### Encrypting data
 
 ```sh
-$ echo "export MY_PASSWORD=qwerty" > supersecret
-$ secrets encrypt supersecret
+echo "export MY_PASSWORD=qwerty" > supersecret
+secrets encrypt supersecret
 ```
 
 This will encrypt the `supersecret` file and place under you `$SECRETS_STORAGE`
@@ -45,7 +45,7 @@ path. The original `supersecret` file will be removed.
 When you need `$MY_PASSWORD` you can source it into current shell:
 
 ```sh
-$ secrets source supersecret
+secrets source supersecret
 ```
 
 ### Decrypting
@@ -53,14 +53,14 @@ $ secrets source supersecret
 If you need to edit your secrets, you can decrypt it into a file.
 
 ```sh
-$ secrets decrypt supersecret > supersecret
+secrets decrypt supersecret > supersecret
 ```
 
 Then you can edit and encrypt it again:
 
 ```sh
 echo "export ANOTHER_SECRET=42" >> supersecret 
-$ secrets encrypt supersecret
+secrets encrypt supersecret
 ```
 
 ### Other
